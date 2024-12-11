@@ -1,14 +1,27 @@
-
-
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const token = localStorage.getItem("token");
+  const email = localStorage.getItem("email");
+  console.log(token);
+  const navigate = useNavigate();
 
   // Toggle Hamburger Menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    // Clear the token from localStorage
+    localStorage.removeItem("token");
+    // Optional: Notify the server (send a request to invalidate the token)
+    // axios.post("/api/logout", {}, { headers: { Authorization: `Bearer ${token}` } });
+
+    // Redirect to login page
+    navigate("/");
   };
 
   return (
@@ -36,19 +49,38 @@ const Navbar = () => {
         {/* Cart and Login Section */}
         <div className="flex items-center space-x-4">
           {/* Login Button */}
-          <Link
-            to="/login"
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
-          >
-            Login
-          </Link>
-          {/* Sign Up Button */}
-          <Link
-            to="/signup"
-            className="hidden sm:inline-block px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
-          >
-            Sign Up
-          </Link>
+          {token ? (
+            <>
+              <h1 className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
+                {email}
+              </h1>
+
+              <button
+                onClick={handleLogout}
+                to="/logout"
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
+              >
+                LOGOUT
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
+              >
+                Login
+              </Link>
+              {/* /* Sign Up Button */}
+              <Link
+                to="/signup"
+                className="hidden sm:inline-block px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
+
           {/* Cart Button */}
           <Link
             to="/cart"

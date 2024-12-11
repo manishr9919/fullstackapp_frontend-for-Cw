@@ -26,7 +26,7 @@ export const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://fullstackapp-banckend-for-cw-5.onrender.com/signin/login",
+        "https://fullstackapp-banckend-for-cw-1.onrender.com/signin/login",
         formData,
         {
           headers: {
@@ -35,8 +35,18 @@ export const Login = () => {
         }
       );
 
-      if (response.status === 200) {
-        alert("Login successful!");
+      console.log(response);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("role", response.data.role);
+      localStorage.setItem("email", response.data.user.email);
+      localStorage.setItem("userId", response.data.user.userId);
+      // response.status === 200
+      if (response.data.role === "admin") {
+        alert("AdminLogin successful!");
+        // Perform navigation or other actions here
+        navigate("/admin");
+      } else if (response.data.role === "user") {
+        alert("UserLogin successful!");
         // Perform navigation or other actions here
         navigate("/");
       } else {

@@ -158,7 +158,7 @@ export const SignUp = () => {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label
               htmlFor="role"
               className="block text-gray-700 font-medium mb-2"
@@ -176,7 +176,7 @@ export const SignUp = () => {
               <option value="user">User</option>
               <option value="author">Author</option>
             </select>
-          </div>
+          </div> */}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
